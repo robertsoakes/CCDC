@@ -1,15 +1,15 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
 WORKDIR /app
 
-# copy csproj and restore as distinct layers
+# Copy source code and build the application 
 COPY src/. .
 RUN dotnet restore
-
-# copy everything else and build app
-RUN dotnet publish -c Release -o out && ls -lh EComm/out
+RUN dotnet publish -c Release -o out 
 
 
+# Build runtime container
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.2 AS runtime
+
 WORKDIR /app
 COPY --from=build /app/EComm/out/. ./
 ENTRYPOINT ["dotnet", "EComm.dll"]
