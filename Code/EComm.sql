@@ -33,7 +33,7 @@ go
 /*==============================================================*/
 /* Table: "Order"                                               */
 /*==============================================================*/
-create table "Order" (
+create table [Order] (
    Id                   int                  identity,
    OrderDate            datetime             not null default getdate(),
    OrderNumber          nvarchar(10)         null,
@@ -46,7 +46,7 @@ go
 /*==============================================================*/
 /* Index: IndexOrderCustomerId                                  */
 /*==============================================================*/
-create index IndexOrderCustomerId on "Order" (
+create index IndexOrderCustomerId on [Order] (
 CustomerId ASC
 )
 go
@@ -54,7 +54,7 @@ go
 /*==============================================================*/
 /* Index: IndexOrderOrderDate                                   */
 /*==============================================================*/
-create index IndexOrderOrderDate on "Order" (
+create index IndexOrderOrderDate on [Order] (
 OrderDate ASC
 )
 go
@@ -150,14 +150,14 @@ Country ASC
 )
 go
 
-alter table "Order"
+alter table [Order]
    add constraint FK_ORDER_REFERENCE_CUSTOMER foreign key (CustomerId)
       references Customer (Id)
 go
 
 alter table OrderItem
    add constraint FK_ORDERITE_REFERENCE_ORDER foreign key (OrderId)
-      references "Order" (Id)
+      references [Order] (Id)
 go
 
 alter table OrderItem
