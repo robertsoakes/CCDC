@@ -6,5 +6,10 @@ COPY src/. .
 RUN dotnet restore
 RUN dotnet publish -c Release -o out 
 
-# Define runtime command relative to build
-ENTRYPOINT ["dotnet", "/app/EComm/out/EComm.dll"]
+
+# Build runtime container
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2 AS runtime
+
+WORKDIR /app
+COPY --from=build /app/EComm/out/. ./
+ENTRYPOINT ["dotnet", "EComm.dll"]
