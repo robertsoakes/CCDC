@@ -1,0 +1,16 @@
+version: "3.4"
+services:
+  
+  dotnet-sqldb:
+    image: code.oak-tree.tech:5005/courseware/oak-tree/examples-docker-k8s/sql
+    restart: always
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Workwork1
+    ports:
+    - 1433:1433
+
+  web:
+    image: code.oak-tree.tech:5005/courseware/oak-tree/examples-docker-k8s/dotnet:runtime
+    ports:
+    - 80:80
